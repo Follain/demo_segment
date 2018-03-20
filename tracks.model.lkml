@@ -1,4 +1,5 @@
-connection: "segment_sources"
+connection: "follain"
+label: "Follain Segment"
 
 # include all views in this project
 include: "*.view"

@@ -2,8 +2,7 @@
 
 view: mapped_tracks {
   derived_table: {
-    sortkeys: ["event_id"]
-    distribution: "looker_visitor_id"
+    indexes: ["event_id","looker_visitor_id"]
     sql_trigger_value: select current_date ;;
     sql: select *
         , datediff(minutes, lag(received_at) over(partition by looker_visitor_id order by received_at), received_at) as idle_time_minutes
@@ -14,7 +13,7 @@ view: mapped_tracks {
           , t.received_at
           , t.event as event
           , t.uuid
-          from segment.tracks as t
+          from follain_prod.tracks as t
           inner join ${aliases_mapping.SQL_TABLE_NAME} as a2v
           on a2v.alias = coalesce(t.user_id, t.anonymous_id)
         )

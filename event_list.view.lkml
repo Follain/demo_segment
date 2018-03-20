@@ -3,11 +3,10 @@
 view: event_list {
   derived_table: {
     sql_trigger_value: SELECT FLOOR((EXTRACT(EPOCH FROM NOW() AT TIME ZONE 'US/Pacific') - 60*60*2)/(60*60*24)) ;;
-    sortkeys: ["event_types"]
-    distribution_style: all
+    indexes: ["event_types"]
     sql: SELECT
         event as event_types
-      FROM segment.tracks
+      FROM follain_prod.tracks
       GROUP BY 1
        ;;
   }

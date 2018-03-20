@@ -1,21 +1,20 @@
 view: aliases_mapping {
   derived_table: {
     sql_trigger_value: select current_date ;;
-    sortkeys: ["looker_visitor_id", "alias"]
-    distribution: "alias"
+    indexes: ["looker_visitor_id", "alias"]
     sql: with
       all_mappings as (
         select anonymous_id
         , user_id
         , received_at as received_at
-        from segment.tracks
+        from follain_prod.tracks
 
         union
 
         select user_id
           , null
           , received_at
-        from segment.tracks
+        from follain_prod.tracks
       )
 
       select

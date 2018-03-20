@@ -1,7 +1,6 @@
 view: mapped_events {
   derived_table: {
-    sortkeys: ["event_id"]
-    distribution: "looker_visitor_id"
+    indexes: ["event_id","looker_visitor_id"]
     sql_trigger_value: select current_date ;;
     sql: select *
         , datediff(minutes, lag(received_at) over(partition by looker_visitor_id order by received_at), received_at) as idle_time_minutes
@@ -13,7 +12,7 @@ view: mapped_events {
           , t.received_at
           , NULL as referrer
           , 'tracks' as event_source
-        from segment.tracks as t
+        from follain_prod.tracks as t
         inner join ${page_aliases_mapping.SQL_TABLE_NAME} as a2v
           on a2v.alias = coalesce(t.user_id, t.anonymous_id)
 
@@ -26,7 +25,7 @@ view: mapped_events {
           , t.received_at
           , t.referrer as referrer
           , 'pages' as event_source
-        from segment.pages as t
+        from follain_prod.pages as t
         inner join ${page_aliases_mapping.SQL_TABLE_NAME} as a2v
           on a2v.alias = coalesce(t.user_id, t.anonymous_id)
       ) as e
