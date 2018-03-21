@@ -9,7 +9,7 @@ include: "*.dashboard"
 
 explore: track_facts {
   view_label: "Events"
-  label: "Events"
+  label: "Events-Tracks"
 
   join: tracks {
     view_label: "Events"
