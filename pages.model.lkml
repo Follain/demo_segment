@@ -5,6 +5,13 @@ label: "Follain Segment"
 # - include: "*.dashboard.lookml"  # include all dashboards in this project
 include: "*.view"
 
+datagroup: follain_segment_default_datagroup {
+  # sql_trigger: SELECT MAX(id) FROM etl_log;;
+  max_cache_age: "4 hour"
+}
+
+persist_with: follain_segment_default_datagroup
+
 # - explore: pages
 
 explore: event_facts {

@@ -7,6 +7,13 @@ include: "*.view"
 # include all dashboards in this project
 include: "*.dashboard"
 
+datagroup: follain_segment_default_datagroup {
+  # sql_trigger: SELECT MAX(id) FROM etl_log;;
+  max_cache_age: "4 hour"
+}
+
+persist_with: follain_segment_default_datagroup
+
 explore: track_facts {
   view_label: "Events"
   label: "Events-Tracks"
