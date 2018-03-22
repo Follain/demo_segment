@@ -1,4 +1,4 @@
-connection: "follain"
+connection: "follain2x"
 label: "Follain Segment"
 
 # include all views in this project
