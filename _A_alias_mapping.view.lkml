@@ -10,7 +10,7 @@ view: page_aliases_mapping {
         , user_id
         , received_at as received_at
         from follain_prod.tracks
-        where received_at >= now() - interval '2 months'
+        where received_at >= now() - interval '3 months'
 
         union
 
@@ -18,7 +18,7 @@ view: page_aliases_mapping {
           , null
           , received_at
         from follain_prod.tracks
-        where received_at >= now() - interval '2 months'
+        where received_at >= now() - interval '3 months'
 
         union
 
@@ -26,7 +26,7 @@ view: page_aliases_mapping {
           , user_id
           , received_at
         from follain_prod.pages
-        where received_at >= now() - interval '2 months'
+        where received_at >= now() - interval '3 months'
 
         union
 
@@ -34,7 +34,7 @@ view: page_aliases_mapping {
         , null
         , received_at
         from follain_prod.pages
-        where received_at >= now() - interval '2 months'
+        where received_at >= now() - interval '3 months'
       )
 
       select
