@@ -34,7 +34,18 @@ view: pages {
 
   dimension: name {
     type: string
-    sql: ${TABLE}.name ;;
+    sql: case when context_page_path ilike '%/c/%' then 'Product Category'
+              when context_page_path ilike '%/p/%' then 'Products'
+              when context_page_path ilike '%search%' then 'Search'
+              when context_page_path ilike '%brand%' then 'Brand'
+              when context_page_path ilike '%/b/%' then 'Brand'
+              when context_page_path ilike '%cart%' then 'Cart'
+              when context_page_path ilike '%checkout%' then 'Checkout'
+              when context_page_path ilike '%skin-quiz%' then 'Skin Quiz'
+              when context_page_path ilike '%by_%' then 'Product Sort'
+              when ${TABLE}.name is not null then ${TABLE}.name
+              else 'General' end
+              ;;
   }
 
   dimension_group: received {
