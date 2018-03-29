@@ -12,7 +12,7 @@ view: session_event_facts {
          'updated_quantity',
          'updated_qty',
          'shipping_submitted') then map.event
-        when map.event ilike 'skin_' then 'skin-quiz'
+        when map.event ilike 'skin_%' then 'skin-quiz'
         else 'Other' end as event
         , MAX(map.received_at) AS ended_at
         , count(distinct map.event_id) AS num_pvs
