@@ -200,7 +200,7 @@
     type: looker_column
     model: tracks
     explore: sessions_trk
-    measures: [session_trk_facts.count_app_loaded, session_trk_facts.count_login,
+    measures: [session_trk_facts.count_views, session_trk_facts.count_login,
       session_trk_facts.count_subscribed_to_blog, session_trk_facts.count_signup]
     listen:
       date: sessions_trk.start_date

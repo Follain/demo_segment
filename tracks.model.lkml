@@ -77,6 +77,10 @@ explore: sessions_trk {
   }
 }
 
+explore: session_event_facts {
+  view_label: "Sessions Event Facts"
+}
+
 explore: funnel_explorer {
   join: sessions_trk {
     view_label: "sessions"

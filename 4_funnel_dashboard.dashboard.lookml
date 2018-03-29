@@ -11,7 +11,7 @@
     model: tracks
     explore: track_facts
     field: track_facts.event
-    default_value: 'viewed_product_category'
+    default_value: '%view%'
 
   - name: event2
     title: 'Second Event'
@@ -19,7 +19,7 @@
     model: tracks
     explore: track_facts
     field: track_facts.event
-    default_value: 'viewed_product'
+    default_value: '%updated%'
 
   - name: event3
     title: 'Third Event'
@@ -27,7 +27,7 @@
     model: tracks
     explore: track_facts
     field: track_facts.event
-    default_value: 'added_product'
+    default_value: '%checkout%'
 
   elements:
 
