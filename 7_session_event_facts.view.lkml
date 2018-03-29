@@ -2,9 +2,7 @@ view: session_event_facts {
   derived_table: {
     sql_trigger_value: select count(*) from ${track_facts.SQL_TABLE_NAME} ;;
     indexes: ["session_id"]
-    sql: SELECT s.session_id
-        , MAX(map.received_at) AS ended_at
-        , count(distinct map.event_id) AS num_pvs,
+    sql: SELECT s.session_id,
         case when map.event  in ( 'log_in' ,
          'sign_up',
          'viewed_product_category',
@@ -12,9 +10,11 @@ view: session_event_facts {
          'update_cart' ,
          'shipping_submitted') then map.event
         else 'Other' end as event
+        , MAX(map.received_at) AS ended_at
+        , count(distinct map.event_id) AS num_pvs
       FROM ${sessions_trk.SQL_TABLE_NAME} AS s
       LEFT JOIN ${track_facts.SQL_TABLE_NAME} as map on map.session_id = s.session_id
-      GROUP BY 1
+      GROUP BY 1,2
        ;;
   }
 
@@ -36,7 +36,8 @@ view: session_event_facts {
   }
 
   measure: number_sessions {
-    type: count
+    type: count_distinct
+    sql: ${TABLE}.session_id ;;
   }
 
   dimension: event {
