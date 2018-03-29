@@ -34,8 +34,8 @@ view: pages {
 
   dimension: name {
     type: string
-    sql: case when context_page_path ilike '%/c/%' then 'Product Category'
-              when context_page_path ilike '%/p/%' then 'Products'
+    sql: case when context_page_path ilike '%/c/%' then 'PLP'
+              when context_page_path ilike '%/p/%' then 'PDP'
               when context_page_path ilike '%search%' then 'Search'
               when context_page_path ilike '%brand%' then 'Brand'
               when context_page_path ilike '%/b/%' then 'Brand'
