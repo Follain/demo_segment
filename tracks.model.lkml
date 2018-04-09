@@ -14,6 +14,8 @@ datagroup: follain_segment_default_datagroup {
 
 persist_with: follain_segment_default_datagroup
 
+explore: event_list {hidden: yes}
+
 explore: track_facts {
   view_label: "Events"
   label: "Events-Tracks"
