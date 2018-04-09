@@ -16,6 +16,30 @@ view: tracks {
     sql: ${TABLE}.event_text ;;
   }
 
+dimension: context_device_source {
+    sql: case
+when  split_part(context_user_agent,'/',2)  ilike '%iphone%' then 'Iphone'
+when  split_part(context_user_agent,'/',2)  ilike '%ipad%' then 'Ipad'
+when  split_part(context_user_agent,'/',2)  ilike '%android%' then 'Android'
+when  split_part(context_user_agent,'/',2) like '%Windows%' then 'WindowsPc'
+when  split_part(context_user_agent,'/',2)  like '%Macintosh%' then 'MacPc'
+when  split_part(context_user_agent,'/',2)  like '%AppleWeb%' then 'MacPc'
+when  split_part(context_user_agent,'/',2)  like '%Googlebot%' then 'Bot'
+
+end ;;}
+
+dimension: context_device_type{
+  sql: case
+when  split_part(context_user_agent,'/',2)  ilike '%iphone%' then 'Mobile'
+when  split_part(context_user_agent,'/',2)  ilike '%ipad%' then 'Mobile'
+when  split_part(context_user_agent,'/',2)  ilike '%android%' then 'Mobile'
+when  split_part(context_user_agent,'/',2)  like '%Windows%' then 'Pc'
+when  split_part(context_user_agent,'/',2)  like '%Macintosh%' then 'Pc'
+when  split_part(context_user_agent,'/',2)  like '%AppleWeb%' then 'Pc'
+when  split_part(context_user_agent,'/',2)  like '%Linux%' then 'Pc'
+when  split_part(context_user_agent,'/',2)  like '%Googlebot%' then 'Bot'
+end;;}
+
   dimension_group: received {
     type: time
     timeframes: [raw, time, date, week, month]

@@ -67,19 +67,19 @@
     width: 4
     height: 2
 
-#   - name: add_a_unique_name_769
-#     title: Device Type Breakdown
-#     type: looker_pie
-#     model: demo_new
-#     explore: tracks
-#     dimensions: [tracks.context_device_type]
-#     measures: [tracks.count]
-#     filters:
-#       tracks.context_device_type: -NULL
-#     sorts: [tracks.count desc]
-#     limit: 500
-#     width: 4
-#     height: 2
+  - name: add_a_unique_name_769
+    title: Device Type Breakdown
+    type: looker_pie
+    model: tracks
+    explore: track_facts
+    dimensions: [tracks.context_device_type]
+    measures: [tracks.count]
+  #     filters:
+  #       tracks.context_device_type: -NULL
+    sorts: [tracks.count desc]
+    limit: 500
+    width: 4
+    height: 2
 
 #   - name: add_a_unique_name_313
 #     title: Carrier Breakdown
@@ -109,19 +109,19 @@
 #     width: 3
 #     height: 3
 
-#   - name: add_a_unique_name_11
-#     title: Top Device Models
-#     type: table
-#     model: demo_new
-#     explore: tracks
-#     dimensions: [tracks.context_device_model]
-#     measures: [tracks.count]
-# #     filters:
-# #       tracks.context_device_model: -NULL
-#     sorts: [tracks.count desc]
-#     limit: 50
-#     width: 6
-#     height: 4
+  - name: add_a_unique_name_11
+    title: Top Device Source
+    type: table
+    model: tracks
+    explore: track_facts
+    dimensions: [tracks.context_device_source]
+    measures: [tracks.count]
+ #     filters:
+ #       tracks.context_device_source: -NULL
+    sorts: [tracks.count desc]
+    limit: 50
+    width: 6
+    height: 4
 
   - name: add_a_unique_name_110
     title: Daily Tracks Count

@@ -15,6 +15,7 @@ view: session_trk_facts {
         , count(case when map.event = 'viewed_product' then event_id else null end) as cnt_pdp
         , count(case when map.event = 'update_cart' then event_id else null end) as cnt_cart
         , count(case when map.event = 'shipping_submitted' then event_id else null end) as cnt_shipping
+        , count(case when map.event = 'order_completed' then event_id else null end) as cnt_order_completed
       FROM ${sessions_trk.SQL_TABLE_NAME} AS s
       LEFT JOIN ${track_facts.SQL_TABLE_NAME} as map on map.session_id = s.session_id
       GROUP BY 1
@@ -79,6 +80,11 @@ view: session_trk_facts {
     sql: ${TABLE}.cnt_view_plp > 0 ;;
   }
 
+  dimension: view_completed {
+    type: yesno
+    sql: ${TABLE}.cnt_order_completed > 0 ;;
+  }
+
   dimension: cart {
     type: yesno
     sql: ${TABLE}.cnt_cart > 0 ;;
@@ -136,6 +142,15 @@ view: session_trk_facts {
 
     filters: {
       field: view_plp
+      value: "yes"
+    }
+  }
+
+  measure: count_order_completed {
+    type: count
+
+    filters: {
+      field: view_completed
       value: "yes"
     }
   }

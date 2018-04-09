@@ -24,7 +24,6 @@ explore: event_facts {
     sql_on: event_facts.id = pages.id
       and event_facts.received_at = pages.received_at
       and event_facts.anonymous_id = pages.anonymous_id
-      and pages.received_at >= now() - interval '3 months'
        ;;
     relationship: one_to_one
   }

@@ -27,7 +27,6 @@ explore: track_facts {
     sql_on: tracks.id = track_facts.id and
       tracks.received_at = track_facts.received_at and
       tracks.anonymous_id = track_facts.anonymous_id
-       and tracks.received_at >= now() - interval '2 months'
        ;;
   }
 
