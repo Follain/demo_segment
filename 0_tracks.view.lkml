@@ -16,6 +16,9 @@ view: tracks {
     sql: ${TABLE}.event_text ;;
   }
 
+  dimension: context_campaign_name {}
+  dimension: context_campaign_medium {}
+
 dimension: context_device_source {
     sql: case
 when  split_part(context_user_agent,'/',2)  ilike '%iphone%' then 'Iphone'
