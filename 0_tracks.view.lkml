@@ -109,14 +109,9 @@ end;;}
   ## Advanced -- Session Count Funnel Meausures
 
   filter: event1 {
-    suggestions: [
-      "viewed_product",
-      "completed_order",
-      "login",
-      "made_purchase",
-      "removed_item",
-      "signup"
-    ]
+      suggest_explore: event_list
+      suggest_dimension: event_list.event_types
+
   }
 
   measure: event1_session_count {
@@ -134,14 +129,8 @@ end;;}
   }
 
   filter: event2 {
-    suggestions: [
-      "viewed_product",
-      "completed_order",
-      "login",
-      "made_purchase",
-      "removed_item",
-      "signup"
-    ]
+    suggest_explore: event_list
+    suggest_dimension: event_list.event_types
   }
 
   measure: event2_session_count {
@@ -159,14 +148,8 @@ end;;}
   }
 
   filter: event3 {
-    suggestions: [
-      "viewed_product",
-      "completed_order",
-      "login",
-      "made_purchase",
-      "removed_item",
-      "signup"
-    ]
+    suggest_explore: event_list
+    suggest_dimension: event_list.event_types
   }
 
   measure: event3_session_count {
@@ -184,14 +167,8 @@ end;;}
   }
 
   filter: event4 {
-    suggestions: [
-      "viewed_product",
-      "completed_order",
-      "login",
-      "made_purchase",
-      "removed_item",
-      "signup"
-    ]
+    suggest_explore: event_list
+    suggest_dimension: event_list.event_types
   }
 
   measure: event4_session_count {
