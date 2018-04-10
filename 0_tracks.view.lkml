@@ -16,8 +16,14 @@ view: tracks {
     sql: ${TABLE}.event_text ;;
   }
 
-  dimension: context_campaign_name {}
-  dimension: context_campaign_medium {}
+  dimension: context_campaign_name
+  {    type: string
+    sql: ${TABLE}.context_campaign_name  ;;}
+
+  dimension: context_campaign_medium {
+    type: string
+    sql: ${TABLE}.context_campaign_medium  ;;
+  }
 
 dimension: context_device_source {
     sql: case
