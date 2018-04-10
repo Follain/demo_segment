@@ -17,12 +17,21 @@ view: tracks {
   }
 
   dimension: context_campaign_name
-  {    type: string
+
+  {   label: "Campaign Name"
+    type: string
     sql: ${TABLE}.context_campaign_name  ;;}
 
   dimension: context_campaign_medium {
+    label: "Campaign Medium"
     type: string
     sql: ${TABLE}.context_campaign_medium  ;;
+  }
+
+  dimension: context_campaign_source {
+    label: "Campaign Source"
+    type: string
+    sql: ${TABLE}.context_campaign_source  ;;
   }
 
 dimension: context_device_source {
