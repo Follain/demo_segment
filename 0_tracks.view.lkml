@@ -25,13 +25,19 @@ view: tracks {
   dimension: context_campaign_medium {
     label: "Campaign Medium"
     type: string
-    sql: ${TABLE}.context_campaign_medium  ;;
+    sql: case
+    when context_page_url like '%?gclid%' then 'cpc'
+    else context_campaign_medium
+    end ;;
   }
 
   dimension: context_campaign_source {
     label: "Campaign Source"
     type: string
-    sql: ${TABLE}.context_campaign_source  ;;
+    sql: case
+    when context_page_url like '%?gclid%' then 'Google'
+    else context_campaign_source
+end  ;;
   }
 
 dimension: context_device_source {
