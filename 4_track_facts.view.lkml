@@ -40,6 +40,11 @@ view: track_facts {
     sql: ${TABLE}.session_id ;;
   }
 
+  measure: count_session {
+    type: count_distinct
+    sql: ${TABLE}.session_id ;;
+  }
+
   dimension: looker_visitor_id {
     sql: ${TABLE}.looker_visitor_id ;;
   }

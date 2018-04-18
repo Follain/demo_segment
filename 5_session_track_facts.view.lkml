@@ -100,6 +100,10 @@ view: session_trk_facts {
     sql: ${number_events} ;;
   }
 
+  measure: count_session {
+    type: count_distinct
+    sql: ${TABLE}.session_id ;;
+  }
 
   measure: count_login {
     type: count

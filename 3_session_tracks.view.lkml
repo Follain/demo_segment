@@ -59,6 +59,10 @@ where (idle_time_minutes > 30 or idle_time_minutes is null)
     type: count
     drill_fields: [detail*]
   }
+  measure: count_session {
+    type: count_distinct
+    sql: ${TABLE}.session_id ;;
+  }
 
   measure: percent_of_total_count {
     type: percent_of_total
