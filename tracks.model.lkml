@@ -56,6 +56,12 @@ explore: track_facts {
     sql_on: ${user_session_facts.looker_visitor_id} = ${users.id} ;;
     relationship: one_to_one
   }
+  join: identifies {
+    view_label: "Email Identification"
+    type: left_outer
+    sql_on: ${tracks.anonymous_id} = ${identifies.anonymous_id};;
+    relationship: one_to_one
+  }
 
   join: tracks_flow {
     view_label: "Events Flow"

@@ -23,6 +23,12 @@ view: identifies {
     sql: ${TABLE}.user_id ;;
   }
 
+  measure: nbr_emails {
+    type: count_distinct
+    sql:  ${TABLE}.email ;;
+    # hidden: true
+  }
+
   measure: count {
     type: count
     drill_fields: [users.id]
