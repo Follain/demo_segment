@@ -13,7 +13,7 @@ view: session_trk_facts {
         , count(case when map.event = 'sign_up' then event_id else null end) as cnt_signup
         , count(case when map.event = 'viewed_product_category' then event_id else null end) as cnt_plp
         , count(case when map.event = 'viewed_product' then event_id else null end) as cnt_pdp
-        , count(case when map.event = 'update_cart' then event_id else null end) as cnt_cart
+        , count(case when map.event like '%cart%' then event_id else null end) as cnt_cart
         , count(case when map.event = 'shipping_submitted' then event_id else null end) as cnt_shipping
         , count(case when map.event = 'order_completed' then event_id else null end) as cnt_order_completed
       FROM ${sessions_trk.SQL_TABLE_NAME} AS s
@@ -67,7 +67,7 @@ view: session_trk_facts {
 
   dimension: view_pdp {
     type: yesno
-    sql: ${TABLE}.cnt_view_pdp > 0 ;;
+    sql: ${TABLE}.cnt_pdp > 0 ;;
   }
 
   dimension: views {
@@ -77,7 +77,7 @@ view: session_trk_facts {
 
   dimension: view_plp {
     type: yesno
-    sql: ${TABLE}.cnt_view_plp > 0 ;;
+    sql: ${TABLE}.cnt_plp > 0 ;;
   }
 
   dimension: view_completed {
@@ -96,13 +96,21 @@ view: session_trk_facts {
   }
 
   measure: count_events {
+    label: "Nbr Events"
     type: sum
     sql: ${number_events} ;;
   }
 
   measure: count_session {
+    label: "Nbr Sessions"
     type: count_distinct
     sql: ${TABLE}.session_id ;;
+  }
+
+  measure: count_bounced {
+    type: count_distinct
+    sql: ${TABLE}.session_id ;;
+    filters: {field: is_bounced_session  value: "yes"}
   }
 
   measure: count_login {
@@ -157,6 +165,7 @@ view: session_trk_facts {
       field: view_completed
       value: "yes"
     }
+    drill_fields: [tracks.order_number]
   }
 
   measure: count_cart {

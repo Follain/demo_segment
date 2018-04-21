@@ -116,6 +116,7 @@ view: users {
   }
 
   measure: count {
+    label: "Nbr Emails"
     type: count
     drill_fields: [detail*]
   }

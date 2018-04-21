@@ -20,14 +20,19 @@ view: tracks {
 
   {   label: "Campaign Name"
     type: string
-    sql: ${TABLE}.context_campaign_name  ;;}
+    sql: case when ${TABLE}.context_page_url  like '%modal_campaign%'
+              then split_part (split_part (  ${TABLE}.context_page_url,'modal_campaign=',2),'&',1)
+              else
+              ${TABLE}.context_campaign_name end ;;
+    drill_fields: [order_number]}
 
   dimension: context_campaign_medium {
     label: "Campaign Medium"
     type: string
     sql: case
-    when context_page_url like '%?gclid%' then 'cpc'
-    else context_campaign_medium
+    when  ${TABLE}.context_page_url like '%?gclid%' then 'cpc'
+    when  ${TABLE}.context_campaign_medium is null then 'Direct'
+    else  ${TABLE}.context_campaign_medium
     end ;;
   }
 
@@ -35,33 +40,33 @@ view: tracks {
     label: "Campaign Source"
     type: string
     sql: case
-    when context_page_url like '%?gclid%' then 'Google'
-    else context_campaign_source
+    when  ${TABLE}.context_page_url like '%?gclid%' then 'Google'
+    else  ${TABLE}.context_campaign_source
 end  ;;
   }
 
 dimension: context_device_source {
     sql: case
-when  split_part(context_user_agent,'/',2)  ilike '%iphone%' then 'Iphone'
-when  split_part(context_user_agent,'/',2)  ilike '%ipad%' then 'Ipad'
-when  split_part(context_user_agent,'/',2)  ilike '%android%' then 'Android'
-when  split_part(context_user_agent,'/',2) like '%Windows%' then 'WindowsPc'
-when  split_part(context_user_agent,'/',2)  like '%Macintosh%' then 'MacPc'
-when  split_part(context_user_agent,'/',2)  like '%AppleWeb%' then 'MacPc'
-when  split_part(context_user_agent,'/',2)  like '%Googlebot%' then 'Bot'
+when  split_part( ${TABLE}.context_user_agent,'/',2)  ilike '%iphone%' then 'Iphone'
+when  split_part( ${TABLE}.context_user_agent,'/',2)  ilike '%ipad%' then 'Ipad'
+when  split_part( ${TABLE}.context_user_agent,'/',2)  ilike '%android%' then 'Android'
+when  split_part( ${TABLE}.context_user_agent,'/',2) like '%Windows%' then 'WindowsPc'
+when  split_part( ${TABLE}.context_user_agent,'/',2)  like '%Macintosh%' then 'MacPc'
+when  split_part( ${TABLE}.context_user_agent,'/',2)  like '%AppleWeb%' then 'MacPc'
+when  split_part( ${TABLE}.context_user_agent,'/',2)  like '%Googlebot%' then 'Bot'
 
 end ;;}
 
 dimension: context_device_type{
   sql: case
-when  split_part(context_user_agent,'/',2)  ilike '%iphone%' then 'Mobile'
-when  split_part(context_user_agent,'/',2)  ilike '%ipad%' then 'Mobile'
-when  split_part(context_user_agent,'/',2)  ilike '%android%' then 'Mobile'
-when  split_part(context_user_agent,'/',2)  like '%Windows%' then 'Pc'
-when  split_part(context_user_agent,'/',2)  like '%Macintosh%' then 'Pc'
-when  split_part(context_user_agent,'/',2)  like '%AppleWeb%' then 'Pc'
-when  split_part(context_user_agent,'/',2)  like '%Linux%' then 'Pc'
-when  split_part(context_user_agent,'/',2)  like '%Googlebot%' then 'Bot'
+when  split_part( ${TABLE}.context_user_agent,'/',2)  ilike '%iphone%' then 'Mobile'
+when  split_part( ${TABLE}.context_user_agent,'/',2)  ilike '%ipad%' then 'Mobile'
+when  split_part( ${TABLE}.context_user_agent,'/',2)  ilike '%android%' then 'Mobile'
+when  split_part( ${TABLE}.context_user_agent,'/',2)  like '%Windows%' then 'Pc'
+when  split_part( ${TABLE}.context_user_agent,'/',2)  like '%Macintosh%' then 'Pc'
+when  split_part( ${TABLE}.context_user_agent,'/',2)  like '%AppleWeb%' then 'Pc'
+when  split_part( ${TABLE}.context_user_agent,'/',2)  like '%Linux%' then 'Pc'
+when  split_part( ${TABLE}.context_user_agent,'/',2)  like '%Googlebot%' then 'Bot'
 end;;}
 
   dimension_group: received {
@@ -69,6 +74,11 @@ end;;}
     timeframes: [raw, time, date, week, month]
     sql: ${TABLE}.received_at ;;
   }
+
+  dimension:  order_number {
+    type: string
+    sql: split_part(split_part( ${TABLE}.context_page_path,'orders/',2),'/',1);;
+    }
 
   dimension: user_id {
     type: string
@@ -88,6 +98,7 @@ end;;}
   }
 
   measure: count {
+    label: "Nbr Registered Users"
     type: count
     drill_fields: [users.id]
   }
@@ -104,6 +115,12 @@ end;;}
       WHEN ${received_date} = ${user_session_facts.first_date} THEN 'New User'
       ELSE 'Returning User' END
        ;;
+  }
+
+  measure: nbr_new_users {
+    type: count_distinct
+    sql: ${anonymous_id} ;;
+    filters: {field: is_new_user value: "New User"}
   }
 
   measure: count_percent_of_total {
