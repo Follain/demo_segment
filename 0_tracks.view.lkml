@@ -16,6 +16,7 @@ view: tracks {
     sql: ${TABLE}.event_text ;;
   }
 
+
   dimension: context_campaign_name
 
   {   label: "Campaign Name"
@@ -35,6 +36,24 @@ view: tracks {
     else  ${TABLE}.context_campaign_medium
     end ;;
   }
+
+  dimension: ga_grouping {
+    label: "GA Grouping"
+    type: string
+    sql: case  when ${TABLE}.context_campaign_source = 'shareasale.com' then 'Affiliate'
+               when ${TABLE}.context_campaign_medium = 'referral'       then 'Organic Social'
+               when ${TABLE}.context_campaign_medium = 'profile-link'   then 'Organic Social'
+               when ${TABLE}.context_campaign_source = 'story'          then 'Organic Social'
+               when ${TABLE}.context_campaign_source = 'Instagram_paid' then 'Paid Social'
+               when ${TABLE}.context_campaign_source = 'facebook'       then 'Paid Social'
+               when ${TABLE}.context_page_url         like '%?gclid%'   then 'Paid Search'
+               when ${TABLE}.context_campaign_medium = 'cpc'            then 'Paid Search'
+               when ${TABLE}.context_campaign_medium = 'email'          then 'Email'
+               when ${TABLE}.context_campaign_source ='(direct)'        then 'Direct'
+               when ${TABLE}.context_campaign_medium ='organic'         then 'Organic Search'
+               when ${TABLE}.context_campaign_medium is null            then 'Direct'
+               else 'Unknown'
+               end;;}
 
   dimension: context_campaign_source {
     label: "Campaign Source"
