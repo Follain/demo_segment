@@ -28,14 +28,14 @@ view: mapped_tracks {
                else 'Unknown'
                end ga_grouping,
               case
-              when  split_part( ${TABLE}.context_user_agent,'/',2)  ilike '%iphone%' then 'Mobile'
-              when  split_part( ${TABLE}.context_user_agent,'/',2)  ilike '%ipad%' then 'Mobile'
-              when  split_part( ${TABLE}.context_user_agent,'/',2)  ilike '%android%' then 'Mobile'
-              when  split_part( ${TABLE}.context_user_agent,'/',2)  like '%Windows%' then 'Pc'
-              when  split_part( ${TABLE}.context_user_agent,'/',2)  like '%Macintosh%' then 'Pc'
-              when  split_part( ${TABLE}.context_user_agent,'/',2)  like '%AppleWeb%' then 'Pc'
-              when  split_part( ${TABLE}.context_user_agent,'/',2)  like '%Linux%' then 'Pc'
-              when  split_part( ${TABLE}.context_user_agent,'/',2)  like '%Googlebot%' then 'Bot'
+              when  split_part( t.context_user_agent,'/',2)  ilike '%iphone%' then 'Mobile'
+              when  split_part( t.context_user_agent,'/',2)  ilike '%ipad%' then 'Mobile'
+              when  split_part( t.context_user_agent,'/',2)  ilike '%android%' then 'Mobile'
+              when  split_part( t.context_user_agent,'/',2)  like '%Windows%' then 'Pc'
+              when  split_part( t.context_user_agent,'/',2)  like '%Macintosh%' then 'Pc'
+              when  split_part( t.context_user_agent,'/',2)  like '%AppleWeb%' then 'Pc'
+              when  split_part( t.context_user_agent,'/',2)  like '%Linux%' then 'Pc'
+              when  split_part( t.context_user_agent,'/',2)  like '%Googlebot%' then 'Bot'
               end device_type,
               oc.order_id,
               oc.total
