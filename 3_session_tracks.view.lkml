@@ -11,6 +11,9 @@ view: sessions_trk {
       , row_number() over(partition by looker_visitor_id order by received_at) as session_sequence_number
       , lead(received_at) over(partition by looker_visitor_id order by received_at) as next_session_start_at
       , ga_grouping
+      , context_device_type
+      , order_id
+      , total
 from ${mapped_tracks.SQL_TABLE_NAME}
 where (idle_time_minutes > 30 or idle_time_minutes is null)
  ;;
@@ -41,7 +44,19 @@ where (idle_time_minutes > 30 or idle_time_minutes is null)
     type: number
     sql: ${TABLE}.session_sequence_number ;;
   }
-
+  dimension: order_id {
+    label: "Order Number"
+    sql: ${TABLE}.order_id ;;
+  }
+  measure: total {
+    label: "Order total"
+    type: sum
+    sql: coalesce(${TABLE}.total,0) ;;
+  }
+  dimension: context_device_type {
+    label: "Device Type"
+    sql: ${TABLE}.context_device_type ;;
+  }
   dimension: is_first_session {
     #     type: yesno
     sql: CASE WHEN ${sequence_number} = 1 THEN 'First Session'

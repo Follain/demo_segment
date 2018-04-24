@@ -26,8 +26,12 @@ view: mapped_tracks {
                when t.context_campaign_medium ='organic'         then 'Organic Search'
                when t.context_campaign_medium is null            then 'Direct'
                else 'Unknown'
-               end ga_grouping
+               end ga_grouping,
+              t.context_device_type,
+              oc.order_id,
+              oc.total
           from follain_prod.tracks as t
+          left join follain_prod.order_completed oc on t.id=oc.id
           inner join ${aliases_mapping.SQL_TABLE_NAME} as a2v
           on a2v.alias = coalesce(t.user_id, t.anonymous_id)
           where t.received_at >= now() - interval '3 months'
@@ -51,6 +55,11 @@ view: mapped_tracks {
     sql: ${TABLE}.ga_grouping ;;
   }
 
+  dimension: context_device_type {
+    label: "Device Type"
+    sql: ${TABLE}.context_device_type ;;
+  }
+
   dimension: looker_visitor_id {
     sql: ${TABLE}.looker_visitor_id ;;
   }
@@ -63,6 +72,15 @@ view: mapped_tracks {
 
   dimension: event {
     sql: ${TABLE}.event ;;
+  }
+  dimension: order_id {
+    label: "Order Number"
+    sql: ${TABLE}.order_id ;;
+  }
+  measure: total {
+    label: "Order total"
+    type: sum
+    sql: coalesce(${TABLE}.total,0) ;;
   }
 
   dimension: idle_time_minutes {

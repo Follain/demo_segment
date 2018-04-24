@@ -3,17 +3,10 @@ view: session_event_facts {
     sql_trigger_value: select count(*) from ${track_facts.SQL_TABLE_NAME} ;;
     indexes: ["session_id"]
     sql: SELECT s.session_id,
-        case when map.event  in ( 'log_in' ,
-         'sign_up',
-         'viewed_product_category',
-         'viewed_product' ,
-         'brand' ,
-         'update_cart' ,
-         'updated_quantity',
-         'updated_qty',
-         'shipping_submitted') then map.event
-        when map.event ilike 'skin_%' then 'skin-quiz'
-        else 'Other' end as event
+        case
+            when map.event ilike 'skin_%' then 'skin-quiz'
+            else map.event
+        end as event
         , MAX(map.received_at) AS ended_at
         , count(distinct map.event_id) AS num_pvs
       FROM ${sessions_trk.SQL_TABLE_NAME} AS s

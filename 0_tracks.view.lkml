@@ -24,8 +24,7 @@ view: tracks {
     sql: case when ${TABLE}.context_page_url  like '%modal_campaign%'
               then split_part (split_part (  ${TABLE}.context_page_url,'modal_campaign=',2),'&',1)
               else
-              ${TABLE}.context_campaign_name end ;;
-    drill_fields: [order_number]}
+              ${TABLE}.context_campaign_name end ;;}
 
   dimension: context_campaign_medium {
     label: "Campaign Medium"
@@ -66,6 +65,7 @@ end  ;;
   }
 
 dimension: context_device_source {
+  label: "Device Source"
     sql: case
 when  split_part( ${TABLE}.context_user_agent,'/',2)  ilike '%iphone%' then 'Iphone'
 when  split_part( ${TABLE}.context_user_agent,'/',2)  ilike '%ipad%' then 'Ipad'
@@ -78,6 +78,7 @@ when  split_part( ${TABLE}.context_user_agent,'/',2)  like '%Googlebot%' then 'B
 end ;;}
 
 dimension: context_device_type{
+  label: "Device type"
   sql: case
 when  split_part( ${TABLE}.context_user_agent,'/',2)  ilike '%iphone%' then 'Mobile'
 when  split_part( ${TABLE}.context_user_agent,'/',2)  ilike '%ipad%' then 'Mobile'
@@ -94,11 +95,6 @@ end;;}
     timeframes: [raw, time, date, week, month]
     sql: ${TABLE}.received_at ;;
   }
-
-  dimension:  order_number {
-    type: string
-    sql: split_part(split_part( ${TABLE}.context_page_path,'orders/',2),'/',1);;
-    }
 
   dimension: user_id {
     type: string
