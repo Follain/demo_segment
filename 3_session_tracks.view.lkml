@@ -53,9 +53,11 @@ where (idle_time_minutes > 30 or idle_time_minutes is null)
     type: sum
     sql: coalesce(${TABLE}.total,0) ;;
   }
-  dimension: context_device_type {
+  dimension: device_type {
     label: "Device Type"
-    sql: ${TABLE}.context_device_type ;;
+    sql: ${TABLE}.device_type ;;
+    suggest_explore:   device_list
+    suggest_dimension: device_list.device_type
   }
   dimension: is_first_session {
     #     type: yesno
