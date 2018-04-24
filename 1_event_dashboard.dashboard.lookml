@@ -72,7 +72,7 @@
     type: looker_pie
     model: tracks
     explore: track_facts
-    dimensions: [tracks.context_device_type]
+    dimensions: [tracks.device_type]
     measures: [tracks.count]
   #     filters:
   #       tracks.context_device_type: -NULL

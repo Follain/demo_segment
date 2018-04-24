@@ -77,7 +77,7 @@ when  split_part( ${TABLE}.context_user_agent,'/',2)  like '%Googlebot%' then 'B
 
 end ;;}
 
-dimension: context_device_type{
+dimension: device_type{
   label: "Device type"
   sql: case
 when  split_part( ${TABLE}.context_user_agent,'/',2)  ilike '%iphone%' then 'Mobile'

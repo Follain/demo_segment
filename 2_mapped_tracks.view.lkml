@@ -27,7 +27,16 @@ view: mapped_tracks {
                when t.context_campaign_medium is null            then 'Direct'
                else 'Unknown'
                end ga_grouping,
-              t.context_device_type,
+              case
+              when  split_part( ${TABLE}.context_user_agent,'/',2)  ilike '%iphone%' then 'Mobile'
+              when  split_part( ${TABLE}.context_user_agent,'/',2)  ilike '%ipad%' then 'Mobile'
+              when  split_part( ${TABLE}.context_user_agent,'/',2)  ilike '%android%' then 'Mobile'
+              when  split_part( ${TABLE}.context_user_agent,'/',2)  like '%Windows%' then 'Pc'
+              when  split_part( ${TABLE}.context_user_agent,'/',2)  like '%Macintosh%' then 'Pc'
+              when  split_part( ${TABLE}.context_user_agent,'/',2)  like '%AppleWeb%' then 'Pc'
+              when  split_part( ${TABLE}.context_user_agent,'/',2)  like '%Linux%' then 'Pc'
+              when  split_part( ${TABLE}.context_user_agent,'/',2)  like '%Googlebot%' then 'Bot'
+              end device_type,
               oc.order_id,
               oc.total
           from follain_prod.tracks as t
@@ -55,7 +64,7 @@ view: mapped_tracks {
     sql: ${TABLE}.ga_grouping ;;
   }
 
-  dimension: context_device_type {
+  dimension: device_type {
     label: "Device Type"
     sql: ${TABLE}.context_device_type ;;
   }

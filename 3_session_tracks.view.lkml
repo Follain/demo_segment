@@ -11,7 +11,7 @@ view: sessions_trk {
       , row_number() over(partition by looker_visitor_id order by received_at) as session_sequence_number
       , lead(received_at) over(partition by looker_visitor_id order by received_at) as next_session_start_at
       , ga_grouping
-      , context_device_type
+      , device_type
       , order_id
       , total
 from ${mapped_tracks.SQL_TABLE_NAME}
