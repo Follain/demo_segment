@@ -38,7 +38,8 @@ view: tracks {
   }
 
   dimension: ga_grouping {
-    label: "GA Grouping"
+    label: "Ga Grouping"
+    hidden: yes
     type: string
     sql: case  when ${TABLE}.context_campaign_source = 'shareasale.com' then 'Affiliate'
                when ${TABLE}.context_campaign_medium = 'referral'       then 'Organic Social'
