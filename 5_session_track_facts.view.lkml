@@ -86,7 +86,7 @@ view: session_trk_facts {
     sql: ${TABLE}.cnt_plp > 0 ;;
   }
 
-  dimension: view_completed {
+  dimension: order_completed {
     type: yesno
     sql: ${TABLE}.cnt_order_completed > 0 ;;
   }
@@ -183,7 +183,7 @@ view: session_trk_facts {
     type: count
 
     filters: {
-      field: view_completed
+      field: order_completed
       value: "yes"
     }
     drill_fields: [order_completed.order_id]
