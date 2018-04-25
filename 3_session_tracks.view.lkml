@@ -12,8 +12,6 @@ view: sessions_trk {
       , lead(received_at) over(partition by looker_visitor_id order by received_at) as next_session_start_at
       , ga_grouping
       , device_type
-      , order_id
-      , order_total
 from ${mapped_tracks.SQL_TABLE_NAME}
 where (idle_time_minutes > 30 or idle_time_minutes is null)
  ;;
@@ -43,16 +41,6 @@ where (idle_time_minutes > 30 or idle_time_minutes is null)
   dimension: sequence_number {
     type: number
     sql: ${TABLE}.session_sequence_number ;;
-  }
-  dimension: order_id {
-    label: "Order Number"
-    sql: ${TABLE}.order_id ;;
-  }
-  measure: order_total {
-    label: "Order Total"
-    type: sum
-    sql: order_total ;;
-    value_format_name: usd
   }
   dimension: device_type {
     label: "Device Type"

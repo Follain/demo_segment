@@ -85,17 +85,6 @@ view: mapped_tracks {
     sql: ${TABLE}.event ;;
   }
 
-  dimension: order_id {
-    label: "Order Number"
-    sql: ${TABLE}.order_id ;;
-  }
-
-  measure: order_total {
-    label: "Order total"
-    type: sum
-    sql: ${TABLE}.order_total ;;
-    value_format_name: usd
-  }
 
   dimension: idle_time_minutes {
     type: number
