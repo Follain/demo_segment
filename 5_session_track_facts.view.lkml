@@ -92,6 +92,7 @@ view: session_trk_facts {
   }
 
   dimension: cart {
+    label: "Added to Cart"
     type: yesno
     sql: ${TABLE}.cnt_cart > 0 ;;
   }
@@ -189,6 +190,7 @@ view: session_trk_facts {
   }
 
   measure: count_cart {
+    label: "Count Added to Cart"
     type: count
 
     filters: {
