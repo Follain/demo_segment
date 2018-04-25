@@ -14,6 +14,8 @@ persist_with: follain_segment_default_datagroup
 
 # - explore: pages
 
+explore: event_list {hidden: yes}
+explore: device_list {hidden: yes}
 explore: event_facts {
   view_label: "Events"
   label: "Events-Pages"

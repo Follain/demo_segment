@@ -67,6 +67,8 @@ view: mapped_tracks {
   dimension: device_type {
     label: "Device Type"
     sql: ${TABLE}.context_device_type ;;
+    suggest_explore:   device_list
+    suggest_dimension: device_list.device_type
   }
 
   dimension: looker_visitor_id {
