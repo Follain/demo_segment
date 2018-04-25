@@ -13,9 +13,11 @@ view: session_trk_facts {
         , count(case when map.event = 'sign_up' then event_id else null end) as cnt_signup
         , count(case when map.event = 'viewed_product_category' then event_id else null end) as cnt_plp
         , count(case when map.event = 'viewed_product' then event_id else null end) as cnt_pdp
-        , count(case when map.event like '%cart%' then event_id else null end) as cnt_cart
+        , count(case when map.event = 'added_product' then event_id else null end) as cnt_cart
         , count(case when map.event = 'shipping_submitted' then event_id else null end) as cnt_shipping
+        , count(case when map.event = 'skin_quiz_completed' then event_id else null end) as cnt_skinquiz
         , count(case when map.event = 'order_completed' then event_id else null end) as cnt_order_completed
+        , sum(order_total) order_total
       FROM ${sessions_trk.SQL_TABLE_NAME} AS s
       LEFT JOIN ${track_facts.SQL_TABLE_NAME} as map on map.session_id = s.session_id
       GROUP BY 1
@@ -58,6 +60,10 @@ view: session_trk_facts {
   dimension: signup {
     type: yesno
     sql: ${TABLE}.cnt_signup > 0 ;;
+  }
+  dimension: skin_quiz {
+    type: yesno
+    sql: ${TABLE}.cnt_skin_quiz > 0 ;;
   }
 
   dimension: shipping {
@@ -107,6 +113,11 @@ view: session_trk_facts {
     sql: ${TABLE}.session_id ;;
   }
 
+  measure: order_total {
+    label: "Order Total"
+    type: sum
+    sql: ${TABLE}.order_total ;;
+  }
   measure: count_bounced {
     type: count_distinct
     sql: ${TABLE}.session_id ;;
@@ -149,6 +160,15 @@ view: session_trk_facts {
     }
   }
 
+  measure: count_skinquiz {
+    type: count
+
+    filters: {
+      field: skin_quiz
+      value: "yes"
+    }
+  }
+
   measure: count_view_plp {
     type: count
 
@@ -165,7 +185,7 @@ view: session_trk_facts {
       field: view_completed
       value: "yes"
     }
-    drill_fields: [tracks.order_number]
+    drill_fields: [order_completed.order_id]
   }
 
   measure: count_cart {

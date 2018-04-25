@@ -12,6 +12,7 @@ view: track_facts {
           , s.session_id
           , t.looker_visitor_id
           , row_number() over(partition by s.session_id order by t.received_at) as track_sequence_number
+          , order_total
         from ${mapped_tracks.SQL_TABLE_NAME} as t
         inner join ${sessions_trk.SQL_TABLE_NAME} as s
         on t.looker_visitor_id = s.looker_visitor_id

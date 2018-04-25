@@ -37,8 +37,7 @@ view: mapped_tracks {
                 when  split_part( t.context_user_agent,'/',2)  like '%Linux%' then 'Pc'
                 when  split_part( t.context_user_agent,'/',2)  like '%Googlebot%' then 'Bot'
             end device_type,
-                oc.order_id,
-                coalesce(oc.total,0) as order_total
+            coalesce(oc.total,0) order_total
           from follain_prod.tracks as t
           left join follain_prod.order_completed oc on t.id=oc.id
           inner join ${aliases_mapping.SQL_TABLE_NAME} as a2v
