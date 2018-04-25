@@ -137,6 +137,7 @@ view: order_completed {
   }
 
   dimension_group: order {
+    hidden: yes
     type: time
     timeframes: [
       raw,
@@ -156,10 +157,6 @@ view: order_completed {
     sql: ${TABLE}.order_id ;;
   }
 
-  dimension: order_total {
-    type: string
-    sql: ${TABLE}.order_total ;;
-  }
 
   dimension_group: original_timestamp {
     hidden: yes
@@ -225,6 +222,7 @@ view: order_completed {
   }
 
   dimension: revenue {
+    hidden: yes
     type: number
     sql: ${TABLE}.revenue ;;
   }
@@ -280,9 +278,10 @@ view: order_completed {
     sql: ${TABLE}.ship_zip ;;
   }
 
-  dimension: shipping {
-    type: number
+  measure: shipping {
+    type: sum
     sql: ${TABLE}.shipping ;;
+    value_format_name: usd
   }
 
   dimension: shipping_cost {
@@ -297,12 +296,14 @@ view: order_completed {
     sql: ${TABLE}.shipping_type ;;
   }
 
-  dimension: tax {
-    type: number
+  measure: tax {
+    type: sum
     sql: ${TABLE}.tax ;;
+    value_format_name: usd
   }
 
   dimension: tax_amount {
+    hidden: yes
     type: string
     sql: ${TABLE}.tax_amount ;;
   }
@@ -328,9 +329,10 @@ view: order_completed {
     sql: ${TABLE}.timestamp ;;
   }
 
-  dimension: total {
-    type: number
+  measure: order_total {
+    type: sum
     sql: ${TABLE}.total ;;
+    value_format_name: usd
   }
 
   dimension: user_id {
@@ -354,6 +356,7 @@ view: order_completed {
   }
 
   dimension: value {
+    hidden: yes
     type: number
     sql: ${TABLE}.value ;;
   }

@@ -13,7 +13,7 @@ view: sessions_trk {
       , ga_grouping
       , device_type
       , order_id
-      , total
+      , order_total
 from ${mapped_tracks.SQL_TABLE_NAME}
 where (idle_time_minutes > 30 or idle_time_minutes is null)
  ;;
@@ -48,10 +48,11 @@ where (idle_time_minutes > 30 or idle_time_minutes is null)
     label: "Order Number"
     sql: ${TABLE}.order_id ;;
   }
-  measure: total {
-    label: "Order total"
+  measure: order_total {
+    label: "Order Total"
     type: sum
-    sql: coalesce(${TABLE}.total,0) ;;
+    sql: order_total ;;
+    value_format_name: usd
   }
   dimension: device_type {
     label: "Device Type"

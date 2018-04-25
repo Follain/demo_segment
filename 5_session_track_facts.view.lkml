@@ -28,7 +28,7 @@ view: session_trk_facts {
     sql: ${TABLE}.session_id ;;
   }
 
-  dimension_group: ended_at {
+    dimension_group: ended_at {
     type: time
     timeframes: [time, date, week, month]
     sql: ${TABLE}.ended_at ;;

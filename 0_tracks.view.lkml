@@ -16,9 +16,7 @@ view: tracks {
     sql: ${TABLE}.event_text ;;
   }
 
-
   dimension: context_campaign_name
-
   {   label: "Campaign Name"
     type: string
     sql: case when ${TABLE}.context_page_url  like '%modal_campaign%'

@@ -31,6 +31,16 @@ explore: track_facts {
        ;;
   }
 
+  join: order_completed {
+    view_label: "Events"
+    type: left_outer
+    relationship: one_to_one
+    sql_on: order_completed.id = track_facts.id and
+      order_completed.received_at = track_facts.received_at and
+      order_completed.anonymous_id = track_facts.anonymous_id
+       ;;
+  }
+
   join: sessions_trk {
     view_label: "Sessions"
     type: left_outer
