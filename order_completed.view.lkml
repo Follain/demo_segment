@@ -330,6 +330,7 @@ view: order_completed {
   }
 
   measure: order_total {
+    label: "Revenue"
     type: sum
     sql: ${TABLE}.total ;;
     value_format_name: usd

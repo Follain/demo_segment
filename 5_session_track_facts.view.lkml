@@ -115,7 +115,7 @@ view: session_trk_facts {
   }
 
   measure: order_total {
-    label: "Order Total"
+    label: "Revenue"
     type: sum
     sql: ${TABLE}.order_total ;;
   }
