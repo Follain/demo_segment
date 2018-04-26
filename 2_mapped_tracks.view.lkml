@@ -22,14 +22,15 @@ view: mapped_tracks {
                when t.context_campaign_medium = 'instagram'      then 'Organic Social'
                when t.context_campaign_source = 'instagram_paid' then 'Paid Social'
                when t.context_campaign_source = 'facebook'       then 'Paid Social'
-               when t.context_page_url         like '%?gclid%'   then 'Paid Search'
+               when t.context_page_url         like '%gclid%'    then 'Paid Search'
+               when t.context_page_search      like '%gclid%'    then 'Paid Search'
                when t.context_campaign_medium = 'cpc'            then 'Paid Search'
                when t.context_campaign_medium = 'email'          then 'Email'
                when t.context_campaign_source ='Mailer'          then 'Email'
                when t.context_campaign_source ='(direct)'        then 'Direct'
                when t.context_campaign_medium ilike'organic%'    then 'Organic Search'
                when t.context_campaign_medium is null            then 'Direct'
-               else 'Direct'
+               else 'Organic Search'
                end ga_grouping,
              case
                   when  split_part( t.context_user_agent,'(',2)  ilike '%iphone%' then 'Mobile'

@@ -27,18 +27,14 @@ view: tracks {
   dimension: context_campaign_medium {
     label: "Campaign Medium"
     type: string
-    sql: case
-    when  ${TABLE}.context_page_url like '%?gclid%' then 'cpc'
-    when  ${TABLE}.context_campaign_medium is null then 'Direct'
-    else  ${TABLE}.context_campaign_medium
-    end ;;
+    sql: ${TABLE}.context_campaign_medium;;
   }
 
   dimension: ga_grouping {
     label: "Ga Grouping"
-    hidden: yes
     type: string
     sql: case  when ${TABLE}.context_campaign_source = 'shareasale'     then 'Affiliate'
+               when ${TABLE}.context_page_referrer ilike '%shareasale%'  then 'Affiliate'
                when ${TABLE}.context_campaign_medium = 'referral'       then 'Organic Social'
                when ${TABLE}.context_campaign_medium = 'profile-link'   then 'Organic Social'
                when ${TABLE}.context_campaign_source = 'story'          then 'Organic Social'
@@ -46,22 +42,20 @@ view: tracks {
                when ${TABLE}.context_campaign_medium = 'instagram'      then 'Organic Social'
                when ${TABLE}.context_campaign_source = 'instagram_paid' then 'Paid Social'
                when ${TABLE}.context_campaign_source = 'facebook'       then 'Paid Social'
-               when ${TABLE}.context_page_url         like '%?gclid%'   then 'Paid Search'
+               when ${TABLE}.context_page_url         like '%gclid%'    then 'Paid Search'
+               when ${TABLE}.context_page_search      like '%gclid%'    then 'Paid Search'
                when ${TABLE}.context_campaign_medium = 'cpc'            then 'Paid Search'
                when ${TABLE}.context_campaign_medium = 'email'          then 'Email'
                when ${TABLE}.context_campaign_source ='Mailer'          then 'Email'
                when ${TABLE}.context_campaign_source ='(direct)'        then 'Direct'
                when ${TABLE}.context_campaign_medium ilike'organic%'    then 'Organic Search'
                when ${TABLE}.context_campaign_medium is null            then 'Direct'
-               else 'Direct'
+               else 'Organic Search'
                end;;}
 
   dimension: context_campaign_source {
     label: "Campaign Source"
-    sql: case
-    when  ${TABLE}.context_page_url like '%?gclid%' then 'Google'
-    else  ${TABLE}.context_campaign_source
-end  ;;
+    sql: ${TABLE}.context_campaign_source;;
   }
 
   dimension: context_user_agent {sql:context_user_agent;;}
@@ -81,7 +75,6 @@ dimension: context_device_source {
 
 dimension: device_type{
   label: "Device type"
-  hidden: yes
   sql:  case
       when  split_part( ${TABLE}.context_user_agent,'(',2)  ilike '%iphone%' then 'Mobile'
       when  split_part( ${TABLE}.context_user_agent,'(',2)  ilike '%ipad%' then 'Tablet'
@@ -109,12 +102,13 @@ dimension: device_type{
 
   dimension: user_id {
     type: string
-    # hidden: true
+    hidden: yes
     sql: ${TABLE}.user_id ;;
   }
 
   dimension: uuid {
     type: number
+    hidden: yes
     value_format_name: id
     sql: ${TABLE}.id ;;
   }

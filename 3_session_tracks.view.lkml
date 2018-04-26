@@ -28,6 +28,7 @@ where (idle_time_minutes > 30 or idle_time_minutes is null)
   }
 
   dimension: ga_grouping {
+    label: "Initial GA Grouping"
     type: string
     sql: ${TABLE}.ga_grouping ;;
   }
@@ -43,7 +44,7 @@ where (idle_time_minutes > 30 or idle_time_minutes is null)
     sql: ${TABLE}.session_sequence_number ;;
   }
   dimension: device_type {
-    label: "Device Type"
+    label: "Initial Device Type"
     sql: ${TABLE}.device_type ;;
     suggest_explore:   device_list
     suggest_dimension: device_list.device_type
