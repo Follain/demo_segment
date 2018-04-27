@@ -7,6 +7,8 @@ view: sessions_pg_trk {
       , received_at as session_start_at
       , row_number() over(partition by looker_visitor_id order by received_at) as session_sequence_number
       , lead(received_at) over(partition by looker_visitor_id order by received_at) as next_session_start_at
+      , ga_grouping
+      , device_type
 from ${mapped_events.SQL_TABLE_NAME}
 where (idle_time_minutes > 30 or idle_time_minutes is null)
  ;;
@@ -17,6 +19,17 @@ where (idle_time_minutes > 30 or idle_time_minutes is null)
     sql: ${TABLE}.session_id ;;
   }
 
+  dimension: ga_grouping {
+    label: "Initial GA Grouping"
+    type: string
+    sql: ${TABLE}.ga_grouping ;;
+  }
+  dimension: device_type {
+    label: "Initial Device Type"
+    sql: ${TABLE}.device_type ;;
+    suggest_explore:   device_list
+    suggest_dimension: device_list.device_type
+  }
   dimension: looker_visitor_id {
     type: number
     sql: ${TABLE}.looker_visitor_id ;;

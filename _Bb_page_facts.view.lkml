@@ -8,6 +8,8 @@ view: page_facts {
       , CASE
           WHEN DATE_part('seconds', e.received_at- LEAD(e.received_at) OVER(PARTITION BY e.looker_visitor_id ORDER BY e.received_at)) > 30*60 THEN NULL
           ELSE DATE_part('seconds', e.received_at- LEAD(e.received_at) OVER(PARTITION BY e.looker_visitor_id ORDER BY e.received_at)) END AS lead_idle_time_condition
+          ,ga_grouping
+          ,device_type
 FROM ${mapped_events.SQL_TABLE_NAME} AS e
  ;;
   }
@@ -16,6 +18,17 @@ FROM ${mapped_events.SQL_TABLE_NAME} AS e
     hidden: yes
     primary_key: yes
     sql: ${TABLE}.event_id ;;
+  }
+  dimension: ga_grouping {
+    label: "GA Grouping"
+    type: string
+    sql: ${TABLE}.ga_grouping ;;
+  }
+  dimension: device_type {
+    label: "Device Type"
+    sql: ${TABLE}.device_type ;;
+    suggest_explore:   device_list
+    suggest_dimension: device_list.device_type
   }
 
   dimension: duration_page_view_seconds {

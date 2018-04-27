@@ -49,7 +49,7 @@ view: tracks {
                when ${TABLE}.context_campaign_source ='Mailer'          then 'Email'
                when ${TABLE}.context_campaign_source ='(direct)'        then 'Direct'
                when ${TABLE}.context_campaign_medium ilike'organic%'    then 'Organic Search'
-               when ${TABLE}.context_campaign_medium is null            then 'Direct'
+               when ${TABLE}.context_campaign_medium is null            then 'Organic Search'
                else 'Organic Search'
                end;;}
 

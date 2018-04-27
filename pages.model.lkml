@@ -36,7 +36,7 @@ explore: event_facts {
     sql_on: event_facts.event_id = concat(tracks.event_id, '-t')
       and event_facts.received_at = tracks.received_at
       and event_facts.anonymous_id = tracks.anonymous_id
-      and tracks.received_at >= now() - interval '3 months'
+      and tracks.received_at >= now() - interval '4 months'
        ;;
     relationship: one_to_one
     fields: []
