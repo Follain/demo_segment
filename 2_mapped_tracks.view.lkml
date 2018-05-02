@@ -97,7 +97,6 @@ view: mapped_tracks {
     sql: ${TABLE}.event ;;
   }
 
-
   dimension: idle_time_minutes {
     type: number
     sql: ${TABLE}.idle_time_minutes ;;

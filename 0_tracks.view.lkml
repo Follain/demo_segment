@@ -30,6 +30,7 @@ view: tracks {
     sql: ${TABLE}.context_campaign_medium;;
   }
 
+
   dimension: ga_grouping {
     label: "Ga Grouping"
     type: string
