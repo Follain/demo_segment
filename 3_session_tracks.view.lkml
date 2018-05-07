@@ -35,8 +35,14 @@ where (idle_time_minutes > 30 or idle_time_minutes is null)
 
   dimension_group: start {
     type: time
-    timeframes: [time, date, week, month]
+    timeframes: [quarter,quarter_of_year,month_num,time, date,year, week, month, hour_of_day, day_of_week, day_of_week_index ]
     sql: ${TABLE}.session_start_at ;;
+  }
+
+  dimension: start_week_of_year{
+  group_label: "Start"
+  type: number
+  sql: EXTRACT(week FROM (${TABLE}.start_at AT TIME ZONE 'UTC' + '1 day'::interval));;
   }
 
   dimension: sequence_number {

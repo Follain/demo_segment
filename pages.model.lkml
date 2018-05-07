@@ -1,5 +1,6 @@
 connection: "follain"
 label: "Follain Segment"
+week_start_day: sunday
 
 # include all views in this project
 # - include: "*.dashboard.lookml"  # include all dashboards in this project
