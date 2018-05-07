@@ -40,7 +40,7 @@ where (idle_time_minutes > 30 or idle_time_minutes is null)
   }
 
   dimension: start_week_of_year{
-  group_label: "Start"
+  group_label: "Start Date"
   type: number
   sql: EXTRACT(week FROM (${TABLE}.start_at AT TIME ZONE 'UTC' + '1 day'::interval));;
   }
