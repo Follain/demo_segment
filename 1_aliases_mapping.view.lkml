@@ -1,36 +1,6 @@
 view: aliases_mapping {
-  derived_table: {
-    sql_trigger_value: select current_date ;;
-    indexes: ["looker_visitor_id", "alias"]
-    sql: with
-      all_mappings as (
-        select anonymous_id
-        , user_id
-        , received_at as received_at
-        from follain_prod.tracks
-        where received_at >= now() - interval '4 months'
+  sql_table_name: analytics_segment.segment_aliases_mapping ;;
 
-        union
-
-        select user_id
-          , null
-          , received_at
-        from follain_prod.tracks
-        where received_at >= now() - interval '4 months'
-      )
-
-      select
-        distinct anonymous_id as alias
-        , first_value(user_id) OVER ()
-
-        , coalesce(first_value(user_id)
-        over(
-          partition by anonymous_id
-          order by case when user_id is not null then 0 else 1 end,received_at
-          rows between unbounded preceding and unbounded following),anonymous_id) as looker_visitor_id
-      from all_mappings
-       ;;
-  }
 
   # Anonymous ID
   dimension: alias {

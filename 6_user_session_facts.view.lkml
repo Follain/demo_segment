@@ -1,18 +1,5 @@
 view: user_session_facts {
-  derived_table: {
-    sql_trigger_value: SELECT CURRENT_DATE ;;
-    indexes: ["looker_visitor_id"]
-    sql: SELECT
-        looker_visitor_id
-        , MIN(DATE(s.session_start_at)) as first_date
-        , MAX(DATE(s.session_start_at)) as last_date
-        , COUNT(*) as number_of_sessions
-      FROM ${sessions_trk.SQL_TABLE_NAME} as s
-      LEFT JOIN ${session_trk_facts.SQL_TABLE_NAME} as sf
-      ON s.session_id = sf.session_id
-      GROUP BY 1
-       ;;
-  }
+  sql_table_name: analytics_segment.segment_user_session_facts ;;
 
   #     Define your dimensions and measures here, like this:
   dimension: looker_visitor_id {

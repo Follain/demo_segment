@@ -201,7 +201,7 @@
     model: tracks
     explore: sessions_trk
     measures: [session_trk_facts.count_views, session_trk_facts.count_login,
-      session_trk_facts.count_subscribed_to_blog, session_trk_facts.count_signup]
+      session_trk_facts.count_subscribed, session_trk_facts.count_signup]
     listen:
       date: sessions_trk.start_date
     sorts: [session_trk_facts.count_view_buy_page desc]

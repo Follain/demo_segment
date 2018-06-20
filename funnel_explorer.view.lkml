@@ -37,7 +37,7 @@ view: funnel_explorer {
               THEN tracks_sessions_map.received_at
               ELSE NULL END
             ) as event6_time
-      FROM ${track_facts.SQL_TABLE_NAME} as tracks_sessions_map
+      FROM analytics_segment.segment_track_facts as tracks_sessions_map
       GROUP BY 1
        ;;
   }

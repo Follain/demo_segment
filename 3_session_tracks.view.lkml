@@ -2,20 +2,7 @@
 # Intermediate Tables
 
 view: sessions_trk {
-  derived_table: {
-    sql_trigger_value: select count(*) from ${mapped_tracks.SQL_TABLE_NAME} ;;
-    indexes: ["session_id","looker_visitor_id","ga_grouping"]
-    sql: select row_number() over(partition by looker_visitor_id order by received_at) || ' - ' || looker_visitor_id as session_id
-      , looker_visitor_id
-      , received_at as session_start_at
-      , row_number() over(partition by looker_visitor_id order by received_at) as session_sequence_number
-      , lead(received_at) over(partition by looker_visitor_id order by received_at) as next_session_start_at
-      , ga_grouping
-      , device_type
-from ${mapped_tracks.SQL_TABLE_NAME}
-where (idle_time_minutes > 30 or idle_time_minutes is null)
- ;;
-  }
+  sql_table_name: analytics_segment.segment_session_tracks ;;
 
   dimension: session_id {
     primary_key: yes

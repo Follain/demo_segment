@@ -5,7 +5,7 @@ view: event_list {
     indexes: ["event_types"]
     sql: SELECT distinct
         event as event_types
-      FROM follain_prod.tracks
+      FROM analytics_segment.segment_tracks_qtr
       where received_at >= now() - interval '1 months'
        ;;
   }

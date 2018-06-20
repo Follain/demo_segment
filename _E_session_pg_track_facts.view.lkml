@@ -1,18 +1,5 @@
 view: session_pg_trk_facts {
-  derived_table: {
-    # Rebuilds after track_facts rebuilds
-    sql_trigger_value: select COUNT(*) from ${event_facts.SQL_TABLE_NAME} ;;
-    indexes: ["session_id"]
-    sql: select s.session_id
-        , first_referrer
-        , max(t2s.received_at) as end_at
-        , count(case when t2s.event_source = 'tracks' then 1 else null end) as tracks_count
-      from ${sessions_pg_trk.SQL_TABLE_NAME} as s
-        inner join ${event_facts.SQL_TABLE_NAME} as t2s
-          using(session_id)
-      group by 1,2
-       ;;
-  }
+  sql_table_name: analytics_segment.segment_session_page_track_facts ;;
 
   # ----- Dimensions -----
 

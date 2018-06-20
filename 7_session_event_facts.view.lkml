@@ -1,19 +1,5 @@
 view: session_event_facts {
-  derived_table: {
-    sql_trigger_value: select count(*) from ${track_facts.SQL_TABLE_NAME} ;;
-    indexes: ["session_id"]
-    sql: SELECT s.session_id,
-        case
-            when map.event ilike 'skin_%' then 'skin-quiz'
-            else map.event
-        end as event
-        , MAX(map.received_at) AS ended_at
-        , count(distinct map.event_id) AS num_pvs
-      FROM ${sessions_trk.SQL_TABLE_NAME} AS s
-      LEFT JOIN ${track_facts.SQL_TABLE_NAME} as map on map.session_id = s.session_id
-      GROUP BY 1,2
-       ;;
-  }
+  sql_table_name: analytics_segment.segment_session_event_facts ;;
 
   dimension: session_id {
     hidden: yes

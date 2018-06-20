@@ -114,7 +114,7 @@
     type: table
     model: tracks
     explore: track_facts
-    dimensions: [tracks.context_device_source]
+    dimensions: [tracks.device_source]
     measures: [tracks.count]
  #     filters:
  #       tracks.context_device_source: -NULL

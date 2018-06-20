@@ -1,5 +1,5 @@
 view: pages {
-  sql_table_name: follain_prod.pages ;;
+  sql_table_name: analytics_segment.segment_pages_qtr ;;
 
   dimension: id {
     primary_key: yes

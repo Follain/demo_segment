@@ -1,28 +1,7 @@
 # Facts about a particular Session.
 
 view: session_trk_facts {
-  derived_table: {
-    sql_trigger_value: select count(*) from ${track_facts.SQL_TABLE_NAME} ;;
-    indexes: ["session_id"]
-    sql: SELECT s.session_id
-        , MAX(map.received_at) AS ended_at
-        , count(distinct map.event_id) AS num_pvs
-        , count(case when map.event like '%view%' then event_id else null end) as cnt_views
-        , count(case when map.event = 'log_in' then event_id else null end) as cnt_login
-        , count(case when map.event = 'signed_up_for_newsletter' then event_id else null end) as cnt_subscribed_to_blog
-        , count(case when map.event = 'sign_up' then event_id else null end) as cnt_signup
-        , count(case when map.event = 'viewed_product_category' then event_id else null end) as cnt_plp
-        , count(case when map.event = 'viewed_product' then event_id else null end) as cnt_pdp
-        , count(case when map.event = 'added_product' then event_id else null end) as cnt_cart
-        , count(case when map.event = 'shipping_submitted' then event_id else null end) as cnt_shipping
-        , count(case when map.event = 'skin_quiz_completed' then event_id else null end) as cnt_skinquiz
-        , count(case when map.event = 'order_completed' then event_id else null end) as cnt_order_completed
-        , sum(order_total) order_total
-      FROM ${sessions_trk.SQL_TABLE_NAME} AS s
-      LEFT JOIN ${track_facts.SQL_TABLE_NAME} as map on map.session_id = s.session_id
-      GROUP BY 1
-       ;;
-  }
+  sql_table_name: analytics_segment.segment_session_track_facts ;;
 
   dimension: session_id {
     hidden: yes
@@ -51,10 +30,10 @@ view: session_trk_facts {
     sql: ${TABLE}.cnt_login > 0 ;;
   }
 
-  dimension: subscribed_to_blog {
+  dimension: subscribed {
     label: "Subscribed to NewsLetter"
     type: yesno
-    sql: ${TABLE}.cnt_subscribed_to_blog > 0 ;;
+    sql: ${TABLE}.cnt_subscribed > 0 ;;
   }
 
   dimension: signup {
@@ -115,6 +94,7 @@ view: session_trk_facts {
   }
 
   measure: order_total {
+    hidden: yes
     label: "Revenue"
     type: sum
     sql: ${TABLE}.order_total ;;
@@ -200,11 +180,11 @@ view: session_trk_facts {
   }
 
 
-  measure: count_subscribed_to_blog {
+  measure: count_subscribed {
     type: count
 
     filters: {
-      field: subscribed_to_blog
+      field: subscribed
       value: "yes"
     }
   }

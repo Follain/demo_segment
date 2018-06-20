@@ -1,52 +1,5 @@
 view: page_aliases_mapping {
-  derived_table: {
-    sql_trigger_value: select current_date ;;
-    indexes: ["looker_visitor_id", "alias"]
-    sql: with
-
-      -- Establish all child-to-parent edges from tables (tracks, pages, aliases)
-      all_mappings as (
-        select anonymous_id
-        , user_id
-        , received_at as received_at
-        from follain_prod.tracks
-        where received_at >= now() - interval '4 months'
-
-        union
-
-        select user_id
-          , null
-          , received_at
-        from follain_prod.tracks
-        where received_at >= now() - interval '4 months'
-
-        union
-
-        select anonymous_id
-          , user_id
-          , received_at
-        from follain_prod.pages
-        where received_at >= now() - interval '4 months'
-
-        union
-
-        select user_id
-        , null
-        , received_at
-        from follain_prod.pages
-        where received_at >= now() - interval '4 months'
-      )
-
-      select
-                  distinct anonymous_id as alias
-                  , coalesce(first_value(user_id )
-                  over(
-                    partition by anonymous_id
-                    order by case when user_id is not null then 0 else 1 end,received_at
-                    rows between unbounded preceding and unbounded following),anonymous_id) as looker_visitor_id
-      from all_mappings
-       ;;
-  }
+  sql_table_name: analytics_segment.segment_page_aliases_mapping ;;
 
   # Anonymous ID
   dimension: alias {

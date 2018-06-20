@@ -1,36 +1,5 @@
 view: mapped_events {
-  derived_table: {
-    indexes: ["event_id","looker_visitor_id"]
-    sql_trigger_value: select current_date ;;
-    sql: select *
-        , date_part('minute', received_at-lag(received_at) over(partition by looker_visitor_id order by received_at)) as idle_time_minutes
-      from (
-        select CONCAT(t.received_at, t.id) || '-t' as event_id
-          , coalesce(a2v.looker_visitor_id,a2v.alias) as looker_visitor_id
-          , t.anonymous_id
-          , t.id
-          , t.received_at
-          , NULL as referrer
-          , 'tracks' as event_source
-        from follain_prod.tracks as t
-        inner join ${page_aliases_mapping.SQL_TABLE_NAME} as a2v
-          on a2v.alias = coalesce(t.user_id, t.anonymous_id)
-
-        union all
-
-        select CONCAT(t.received_at, t.id) || '-p' as event_id
-          , coalesce(a2v.looker_visitor_id,a2v.alias)
-          , t.anonymous_id
-          , t.id
-          , t.received_at
-          , t.referrer as referrer
-          , 'pages' as event_source
-        from follain_prod.pages as t
-        inner join ${page_aliases_mapping.SQL_TABLE_NAME} as a2v
-          on a2v.alias = coalesce(t.user_id, t.anonymous_id)
-      ) as e
-       ;;
-  }
+  sql_table_name: analytics_segment.segment_mapped_events ;;
 
   dimension: event_id {
     sql: ${TABLE}.event_id ;;

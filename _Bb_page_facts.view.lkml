@@ -1,18 +1,5 @@
 view: page_facts {
-  derived_table: {
-    indexes: ["received_at","looker_visitor_id"]
-    sql_trigger_value: select count(*) from ${mapped_events.SQL_TABLE_NAME} ;;
-    sql: SELECT e.event_id AS event_id
-      , e.looker_visitor_id
-      , e.received_at
-      , CASE
-          WHEN DATE_part('seconds', LEAD(e.received_at) OVER(PARTITION BY e.looker_visitor_id ORDER BY e.received_at)- e.received_at) > 30*60 THEN NULL
-          ELSE DATE_part('seconds',LEAD(e.received_at) OVER(PARTITION BY e.looker_visitor_id ORDER BY e.received_at)- e.received_at) END AS lead_idle_time_condition
-          ,ga_grouping
-          ,device_type
-FROM ${mapped_events.SQL_TABLE_NAME} AS e
- ;;
-  }
+  sql_table_name: analytics_segment.segment_page_facts ;;
 
   dimension: event_id {
     hidden: yes
