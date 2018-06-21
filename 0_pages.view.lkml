@@ -55,7 +55,7 @@ view: pages {
 
   dimension: url {
     type: string
-    sql: ${TABLE}.url ;;
+    sql: ${TABLE}.context_page_url ;;
   }
 
   dimension: user_id {

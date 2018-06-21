@@ -15,7 +15,7 @@ view: session_event_facts {
 
   dimension: number_events {
     type: number
-    sql: ${TABLE}.num_pvs ;;
+    sql: ${TABLE}.events_count ;;
   }
 
   measure: number_sessions {

@@ -17,7 +17,7 @@ view: session_trk_facts {
 
   dimension: number_events {
     type: number
-    sql: ${TABLE}.num_pvs ;;
+    sql: ${TABLE}.events_count;;
   }
 
   dimension: is_bounced_session {
@@ -77,15 +77,11 @@ view: session_trk_facts {
   }
 
   dimension: num_pvs {
+    label: "Nbr Events"
     type: number
-    sql: ${TABLE}.num_pvs ;;
+    sql: ${TABLE}.events_count ;;
   }
 
-  measure: count_events {
-    label: "Nbr Events"
-    type: sum
-    sql: ${number_events} ;;
-  }
 
   measure: count_session {
     label: "Nbr Sessions"
