@@ -27,25 +27,14 @@ view: pages {
     sql: ${TABLE}.context_campaign_medium ;;
   }
 
-  dimension: context_campaign_name {
+  dimension: campaign_name {
     type: string
-    sql: ${TABLE}.context_campaign_name ;;
+    sql: ${TABLE}.campaign_name ;;
   }
 
   dimension: name {
     type: string
-    sql: case when context_page_path ilike '%/c/%' then 'PLP'
-              when context_page_path ilike '%/p/%' then 'PDP'
-              when context_page_path ilike '%search%' then 'Search'
-              when context_page_path ilike '%brand%' then 'Brand'
-              when context_page_path ilike '%/b/%' then 'Brand'
-              when context_page_path ilike '%cart%' then 'Cart'
-              when context_page_path ilike '%checkout%' then 'Checkout'
-              when context_page_path ilike '%skin-quiz%' then 'Skin Quiz'
-              when context_page_path ilike '%by_%' then 'Product Sort'
-              when ${TABLE}.name is not null then ${TABLE}.name
-              else 'General' end
-              ;;
+    sql:  ${TABLE}.name ;;
   }
 
   dimension_group: received {
@@ -83,7 +72,7 @@ view: pages {
 
   measure: count {
     type: count
-    drill_fields: [id, context_campaign_name, name, users.id]
+    drill_fields: [id, campaign_name, name, users.id]
   }
 
   measure: count_visitors {
@@ -93,7 +82,7 @@ view: pages {
 
   measure: count_pageviews {
     type: count
-    drill_fields: [context_campaign_name]
+    drill_fields: [campaign_name]
   }
 
   measure: avg_page_view_duration_minutes {
