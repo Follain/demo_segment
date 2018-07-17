@@ -35,6 +35,11 @@ view: users {
     tags: ["email"]
   }
 
+dimension: has_email {
+  type: yesno
+  sql: ${TABLE}.email is not null;;
+}
+
   dimension: external_id {
     type: string
     sql: ${TABLE}.external_id ;;
