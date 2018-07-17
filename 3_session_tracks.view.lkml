@@ -14,6 +14,17 @@ view: sessions_trk {
     sql: ${TABLE}.looker_visitor_id ;;
   }
 
+
+  dimension: email {
+    type: string
+    sql: case when ${TABLE}.looker_visitor_id like'%@%' then ${TABLE}.looker_visitor_id end ;;
+  }
+
+  dimension: has_email {
+    type: yesno
+    sql:${TABLE}.looker_visitor_id like'%@%' ;;
+  }
+
   dimension: ga_grouping {
     label: "Initial GA Grouping"
     type: string

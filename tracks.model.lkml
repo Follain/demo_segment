@@ -117,9 +117,4 @@ explore: funnel_explorer {
     foreign_key: session_id
   }
 
-  join: users {
-    relationship: many_to_one
-    type: left_outer
-    sql_on: users.email = sessions_trk.looker_visitor_id ;;
   }
-}
