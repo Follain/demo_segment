@@ -119,6 +119,7 @@ explore: funnel_explorer {
 
   join: users {
     relationship: many_to_one
-    sql_on: coalesce(users.mapped_user_id, users.user_id) = sessions.user_id ;;
+    type: left_outer
+    sql_on: users.email = sessions_trk.looker_visitor_id ;;
   }
 }
