@@ -27,53 +27,53 @@ view: session_trk_facts {
 
   dimension: login {
     type: yesno
-    sql: ${TABLE}.cnt_login > 0 ;;
+    sql: ${TABLE}.login_count > 0 ;;
   }
 
   dimension: subscribed {
     label: "Subscribed to NewsLetter"
     type: yesno
-    sql: ${TABLE}.cnt_subscribed > 0 ;;
+    sql: ${TABLE}.subscribed_count > 0 ;;
   }
 
   dimension: signup {
     type: yesno
-    sql: ${TABLE}.cnt_signup > 0 ;;
+    sql: ${TABLE}.count_signup > 0 ;;
   }
   dimension: skin_quiz {
     type: yesno
-    sql: ${TABLE}.cnt_skin_quiz > 0 ;;
+    sql: ${TABLE}.count_skin_quiz > 0 ;;
   }
 
   dimension: shipping {
     type: yesno
-    sql: ${TABLE}.cnt_shipping > 0 ;;
+    sql: ${TABLE}.shipping_count > 0 ;;
   }
 
   dimension: view_pdp {
     type: yesno
-    sql: ${TABLE}.cnt_pdp > 0 ;;
+    sql: ${TABLE}.pdp_count > 0 ;;
   }
 
   dimension: views {
     type: yesno
-    sql: ${TABLE}.cnt_views > 0 ;;
+    sql: ${TABLE}.views_count > 0 ;;
   }
 
   dimension: view_plp {
     type: yesno
-    sql: ${TABLE}.cnt_plp > 0 ;;
+    sql: ${TABLE}.plp_count > 0 ;;
   }
 
   dimension: order_completed {
     type: yesno
-    sql: ${TABLE}.cnt_order_completed > 0 ;;
+    sql: ${TABLE}.order_completed_count > 0 ;;
   }
 
   dimension: cart {
     label: "Added to Cart"
     type: yesno
-    sql: ${TABLE}.cnt_cart > 0 ;;
+    sql: ${TABLE}.cart_count > 0 ;;
   }
 
   dimension: num_pvs {
