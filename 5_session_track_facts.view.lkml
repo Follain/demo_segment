@@ -38,11 +38,11 @@ view: session_trk_facts {
 
   dimension: signup {
     type: yesno
-    sql: ${TABLE}.count_signup > 0 ;;
+    sql: ${TABLE}.signup_count > 0 ;;
   }
   dimension: skin_quiz {
     type: yesno
-    sql: ${TABLE}.count_skin_quiz > 0 ;;
+    sql: ${TABLE}.skin_quiz_count > 0 ;;
   }
 
   dimension: shipping {
