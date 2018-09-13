@@ -9,6 +9,7 @@ view: event_facts {
 
   dimension: uuid {
     type: string
+    hidden: yes
     sql: ${TABLE}.id ;;
   }
 
@@ -18,6 +19,16 @@ view: event_facts {
 
   dimension: first_referrer {
     sql: ${TABLE}.first_referrer ;;
+  }
+
+
+  dimension: ga_grouping {
+    label: "GA Grouping GA-Equiv"
+    sql: ${TABLE}.m_ga_grouping ;;
+  }
+
+  dimension: event_ga_grouping {
+    sql: ${TABLE}.event_ga_grouping ;;
   }
 
   dimension: first_referrer_domain {
@@ -51,5 +62,10 @@ view: event_facts {
   measure: count_visitors {
     type: count_distinct
     sql: ${looker_visitor_id} ;;
+  }
+  measure: count_session {
+    label: "Nbr Sessions (GA equiv)"
+    type: count_distinct
+    sql: ${session_id} ;;
   }
 }

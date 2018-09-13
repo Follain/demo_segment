@@ -1,5 +1,6 @@
 view: sessions_pg_trk {
   sql_table_name: analytics_segment.segment_session_page_tracks ;;
+  label: "Page Tracks"
 
   dimension: session_id {
     hidden: yes

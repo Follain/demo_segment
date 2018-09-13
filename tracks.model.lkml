@@ -43,14 +43,14 @@ explore: track_facts {
   }
 
   join: sessions_trk {
-    view_label: "Sessions"
+    view_label: "Sessions-Track"
     type: left_outer
     sql_on: ${track_facts.session_id} = ${sessions_trk.session_id} ;;
     relationship: many_to_one
   }
 
   join: session_trk_facts {
-    view_label: "Sessions"
+    view_label: "Sessions-Track"
     type: left_outer
     sql_on: ${track_facts.session_id} = ${session_trk_facts.session_id} ;;
     relationship: many_to_one

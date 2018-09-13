@@ -6,17 +6,7 @@ view: page_facts {
     primary_key: yes
     sql: ${TABLE}.event_id ;;
   }
-  dimension: ga_grouping {
-    label: "GA Grouping"
-    type: string
-    sql: ${TABLE}.ga_grouping ;;
-  }
-  dimension: device_type {
-    label: "Device Type"
-    sql: ${TABLE}.device_type ;;
-    suggest_explore:   device_list
-    suggest_dimension: device_list.device_type
-  }
+
 
   dimension: duration_page_view_seconds {
     type: number

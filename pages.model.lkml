@@ -19,7 +19,7 @@ explore: event_list {hidden: yes}
 explore: device_list {hidden: yes}
 explore: event_facts {
   view_label: "Events"
-  label: "Events-Pages"
+  label: "Events-Facts"
 
   join: pages {
     view_label: "Events"
@@ -54,14 +54,14 @@ explore: event_facts {
   }
 
   join: sessions_pg_trk {
-    view_label: "Sessions"
+    view_label: "Sessions-Page(ga-equiv)"
     type: left_outer
     sql_on: ${event_facts.session_id} = ${sessions_pg_trk.session_id} ;;
     relationship: many_to_one
   }
 
   join: session_pg_trk_facts {
-    view_label: "Sessions"
+    view_label: "Sessions-Page"
     type: left_outer
     sql_on: ${event_facts.session_id} = ${session_pg_trk_facts.session_id} ;;
     relationship: many_to_one
