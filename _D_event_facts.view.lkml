@@ -27,6 +27,19 @@ view: event_facts {
     sql: ${TABLE}.m_ga_grouping ;;
   }
 
+  dimension: f_session_ga_grouping {
+    sql: ${TABLE}.f_session_ga_grouping ;;
+  }
+  dimension: l_session_ga_grouping {
+    sql: ${TABLE}.l_session_ga_grouping ;;
+  }
+  dimension: fnd_session_ga_grouping {
+    sql: ${TABLE}.fnd_session_ga_grouping ;;
+  }
+  dimension: lnd_session_ga_grouping {
+    sql: ${TABLE}.lnd_session_ga_grouping ;;
+  }
+
   dimension: event_ga_grouping {
     sql: ${TABLE}.event_ga_grouping ;;
   }

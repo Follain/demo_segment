@@ -18,15 +18,21 @@ view: pages {
   }
 
   dimension: context_campaign_content {
+    label: "Campaign Content"
     type: string
     sql: ${TABLE}.context_campaign_content ;;
   }
 
   dimension: context_campaign_medium {
+    label: "Campaign Medium"
     type: string
     sql: ${TABLE}.context_campaign_medium ;;
   }
-
+  dimension: context_campaign_source {
+    label: "Campaign Source"
+    type: string
+    sql: ${TABLE}.context_campaign_source ;;
+  }
   dimension: campaign_name {
     type: string
     sql: ${TABLE}.campaign_name ;;
