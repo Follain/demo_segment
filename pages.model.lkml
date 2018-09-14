@@ -22,7 +22,7 @@ explore: event_facts {
   label: "Events-Facts"
 
   join: pages {
-    view_label: "Events"
+    view_label: "Events-Pages"
     type: left_outer
     sql_on: event_facts.id = pages.id
       and event_facts.received_at = pages.received_at
@@ -32,7 +32,7 @@ explore: event_facts {
   }
 
   join: tracks {
-    view_label: "Events"
+    view_label: "Events-Tracks"
     type: left_outer
     sql_on: event_facts.event_id = concat(tracks.event_id, '-t')
       and event_facts.received_at = tracks.received_at
@@ -44,7 +44,7 @@ explore: event_facts {
   }
 
   join: page_facts {
-    view_label: "Events"
+    view_label: "Events-Page-Facts"
     type: left_outer
     sql_on: event_facts.event_id = page_facts.event_id and
       event_facts.received_at = page_facts.received_at and

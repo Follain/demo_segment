@@ -28,15 +28,19 @@ view: event_facts {
   }
 
   dimension: f_session_ga_grouping {
+    hidden: yes
     sql: ${TABLE}.f_session_ga_grouping ;;
   }
   dimension: l_session_ga_grouping {
+    hidden: yes
     sql: ${TABLE}.l_session_ga_grouping ;;
   }
   dimension: fnd_session_ga_grouping {
+    hidden: yes
     sql: ${TABLE}.fnd_session_ga_grouping ;;
   }
   dimension: lnd_session_ga_grouping {
+    hidden: yes
     sql: ${TABLE}.lnd_session_ga_grouping ;;
   }
 
