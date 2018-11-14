@@ -38,6 +38,7 @@ view: funnel_explorer {
               ELSE NULL END
             ) as event6_time
       FROM analytics_segment.segment_track_facts as tracks_sessions_map
+      where {% condition received_at %} received_at {% endcondition %}
       GROUP BY 1
        ;;
   }
@@ -45,6 +46,12 @@ view: funnel_explorer {
   filter: event1 {
     suggest_explore: event_list
     suggest_dimension: event_list.event_types
+  }
+
+  filter: received_at {
+    label: "Received at"
+    type: date
+    default_value: "3 weeks ago for 3 weeks"
   }
 
   filter: event2 {
